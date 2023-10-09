@@ -49,4 +49,27 @@ pipeline{
             }
         }
     }
+
+    post {
+        success{
+            slackSend(
+                channel: '#backend #devops',
+                color: '#0ac914',
+                message: 
+                """
+                ✅ SUCCEEDED\n ✏️ Job: ${JOB_NAME} - [#${BUILD_NUMBER}]\n 🔗 URL: ${BUILD_URL}
+                """
+            )
+        }
+        failure{
+            slackSend(
+                channel: '#backend #devops',
+                color: '#c90a30',
+                message: 
+                """
+                ⚠️ FAILED\n ✏️ Job: ${JOB_NAME} - [#${BUILD_NUMBER}]\n 🔗 URL: ${BUILD_URL}
+                """
+            )
+        }
+    }
 }
